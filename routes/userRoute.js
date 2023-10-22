@@ -3,6 +3,8 @@ const router = express.Router();
 const User = require("../models/userModels");
 const bcrypt = require('bcrypt')
 
+
+
 router.post('/register' , async(req, res) =>{
     
     
@@ -33,8 +35,8 @@ router.post('/register' , async(req, res) =>{
        res.status(200).send({message:"User created sucessfully"})
 
     }catch(error){
-       res.status(500).send({message:"Error creating user",sucess:false})
-       console.log(error);
+       res.status(500).send({message: error,sucess:false})
+     
     }
 })
 

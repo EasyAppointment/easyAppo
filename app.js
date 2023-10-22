@@ -16,4 +16,5 @@ const dbConfig = require("./config/dbConfig.js")
 //apis
 app.use('/api/user', userRoute)
 
+
 app.listen(port , () => console.log("Server Fine"))
