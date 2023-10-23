@@ -13,7 +13,7 @@ const mongoose = require('mongoose');
 //     console.log("Error in the MongoDB connection" , error)
 // })
 
-const uri = process.env.MONGO_URL
+const uri = 'mongodb+srv://easyappointment970:Htp36wMZwKL9XGTn@easyappointment.fpew8ol.mongodb.net/'
 
 mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => {
