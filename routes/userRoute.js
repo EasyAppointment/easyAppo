@@ -30,7 +30,7 @@ router.post('/register' , async(req, res) =>{
     const newUser = new User({
         name: req.body.name,
        
-        password: hashedPassword , // Store the hashed password
+        password: hashedPassword , 
         
         phone: req.body.phone,
         
@@ -49,7 +49,7 @@ router.post('/register' , async(req, res) =>{
 router.post('/login' , async(req, res) =>{
     
     try{
-      const user = await User.findOne({email:req.body.email});
+      const user = await User.findOne({phone:req.body.phone});
       if(!user){
 
         return res.status(400).send({message:"User does not exist" , success:false })
