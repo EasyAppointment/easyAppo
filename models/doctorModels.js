@@ -23,8 +23,11 @@ const doctorSchema = new mongoose.Schema({
     password:{
         type:String,
         required:true
-    }
-    
+    },
+    qualification:{
+        type:String,
+        required:true
+    }    
     
 
 },{

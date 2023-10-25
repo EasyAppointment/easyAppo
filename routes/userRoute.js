@@ -3,9 +3,11 @@ const router = express.Router();
 const User = require("../models/userModels");
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
+const Doctor = require("../models/doctorModels");
 
 
 
+// Patient Register
 router.post('/register' , async(req, res) =>{
     
     
@@ -46,6 +48,7 @@ router.post('/register' , async(req, res) =>{
     }
 })
 
+//Patient Login
 router.post('/login' , async(req, res) =>{
     
     try{
@@ -56,17 +59,19 @@ router.post('/login' , async(req, res) =>{
       }
       const isMatch = await bcrypt.compare(req.body.password , user.password)
       if(!isMatch){
-        return res.status(500).send({message:"Password is incorrect" , success:false})
+        return res.status(500).send({message:"Password is incorrect" , success:false , status :"400"})
       }else{
         const token = jwt.sign({id:user._id}, "EasyAppointment" , {
             expiresIn:"75d"
         });
-        res.status(200).send({message:"login successful", success:true , data :token , userData : user})
+        res.status(200).send({message:"login successful", success:true , data :token , userData : user , status :"200"})
       }
 
     }catch(error){
         res.status(500).send({error:error , success:false})
     }
 })
+
+
 
 module.exports = router;

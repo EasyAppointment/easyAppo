@@ -4,6 +4,9 @@ const Doctor = require("../models/doctorModels");
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 
+
+
+// Doctor Register
 router.post('/register' , async(req, res) =>{
     
     
@@ -31,11 +34,12 @@ router.post('/register' , async(req, res) =>{
         password: hashedPassword , 
         role:req.body.role,
         phone: req.body.phone,
+        qualification:req.body.qualification
         
     });
 
        await newDoctor.save();
-       res.status(200).send({message:"Doctor profile created sucessfully" , sucess:true})
+       res.status(200).send({message:"Doctor profile created sucessfully" , sucess:true })
 
     }catch(error){
        res.status(500).send({message: error.message,sucess:false})
@@ -44,6 +48,7 @@ router.post('/register' , async(req, res) =>{
     }
 })
 
+//Doctor login
 router.post('/login' , async(req, res) =>{
     
     try{
@@ -59,13 +64,24 @@ router.post('/login' , async(req, res) =>{
         const token = jwt.sign({id:doctor._id}, "EasyAppointment" , {
             expiresIn:"75d"
         });
-        res.status(200).send({message:"login successful", success:true , data :token , doctorData : doctor})
+        res.status(200).send({message:"login successful", success:true , data :token , doctorData : doctor , isApproved : true})
       }
 
     }catch(error){
         res.status(500).send({error:error , success:false})
     }
 })
+
+
+// Get all Doctors
+router.get("/", async (req, res) => {
+  try {
+      const doctors = await Doctor.find();
+      res.status(200).send({ message: "List of Doctors", success: true, data: doctors });
+  } catch (error) {
+      res.status(500).send({ message: error, success: false });
+  }
+});
 
 
 
