@@ -15,7 +15,7 @@ router.post('/register' , async(req, res) =>{
         const doctorExists = await Doctor.findOne({email:req.body.email});
         
         if(doctorExists){
-            return res.status(400).send({message: "Doctor already exists", sucess:false })
+            return res.status(401).send({message: "Doctor already exists", sucess:false })
         }
 
         const password = req.body.password;
@@ -55,11 +55,11 @@ router.post('/login' , async(req, res) =>{
       const doctor = await Doctor.findOne({email:req.body.email});
       if(!doctor){
 
-        return res.status(400).send({message:"Doctor profile does not exist" , success:false })
+        return res.status(401).send({message:"Doctor profile does not exist" , success:false })
       }
       const isMatch = await bcrypt.compare(req.body.password , doctor.password)
       if(!isMatch){
-        return res.status(500).send({message:"Password is incorrect" , success:false})
+        return res.status(400).send({message:"Password is incorrect" , success:false})
       }else{
         const token = jwt.sign({id:doctor._id}, "EasyAppointment" , {
             expiresIn:"75d"
