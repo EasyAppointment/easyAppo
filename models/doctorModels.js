@@ -27,7 +27,14 @@ const doctorSchema = new mongoose.Schema({
     qualification:{
         type:String,
         required:true
-    }    
+    },
+    experienced:{
+        type:String,
+        required:true
+    },
+    isApproved:{
+        type: Boolean
+    }
     
 
 },{

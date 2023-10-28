@@ -3,6 +3,7 @@ const router = express.Router();
 const Doctor = require("../models/doctorModels");
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
+const cloudinary = require('cloudinary').v2;
 
 
 
@@ -34,7 +35,10 @@ router.post('/register' , async(req, res) =>{
         password: hashedPassword , 
         role:req.body.role,
         phone: req.body.phone,
-        qualification:req.body.qualification
+        qualification:req.body.qualification,
+        experienced:req.body.experienced,
+        isApproved: false
+      
         
     });
 
@@ -71,6 +75,46 @@ router.post('/login' , async(req, res) =>{
         res.status(500).send({error:error , success:false})
     }
 })
+
+//Doctor Photo 
+cloudinary.config({ 
+  cloud_name: 'dzfz1uhcx', 
+  api_key: '872692412356279', 
+  api_secret: 'H8_YAck8zuIWdtWPJgl67cAB1EA' 
+});
+
+router.post('/upload' , (req,res) =>{
+    const file = req.files.photo;
+    cloudinary.uploader.upload(file.tempFilePath , (err ,result) =>{
+      console.log(result)
+      if (err) {
+        return res.status(500).send({message: err.message, success: false});
+      }
+      res.status(200).send({message: "File uploaded successfully", success: true, data: result});
+    } )
+})
+//IsApproved 
+router.patch('/:id' , async (req, res) => {
+  const doctorId = req.params.id;
+
+  try {
+      const updatedDoctor = await Doctor.findByIdAndUpdate(
+          doctorId,
+          { isApproved: req.body.isApproved },
+          { new: true } 
+      );
+
+      if (!updatedDoctor) {
+          return res.status(404).send({ message: "Doctor not found", success: false });
+      }
+
+      res.status(200).send({ message: "Doctor approval status updated successfully", success: true, data: updatedDoctor });
+  } catch (error) {
+      res.status(500).send({ message: error.message, success: false });
+  }
+});
+
+
 
 
 // Get all Doctors
