@@ -37,7 +37,8 @@ router.post('/register' , async(req, res) =>{
         phone: req.body.phone,
         qualification:req.body.qualification,
         experienced:req.body.experienced,
-        isApproved: false
+        isApproved: false,
+        photo:req.body.photo
       
         
     });

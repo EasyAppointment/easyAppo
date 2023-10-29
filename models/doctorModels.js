@@ -34,6 +34,9 @@ const doctorSchema = new mongoose.Schema({
     },
     isApproved:{
         type: Boolean
+    },
+    photo:{
+        type:String
     }
     
 
