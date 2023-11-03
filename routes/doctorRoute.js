@@ -2,7 +2,8 @@ const express = require('express');
 const router = express.Router();
 const Doctor = require("../models/doctorModels");
 const bcrypt = require('bcrypt')
-const jwt = require('jsonwebtoken')
+const jwt = require('jsonwebtoken');
+const { isNullOrUndefined } = require('util');
 const cloudinary = require('cloudinary').v2;
 
 
@@ -30,15 +31,15 @@ router.post('/register' , async(req, res) =>{
        
     
     const newDoctor = new Doctor({
-        name: req.body.name,
+        name: null,
         email:req.body.email,
         password: hashedPassword , 
-        role:req.body.role,
-        phone: req.body.phone,
-        qualification:req.body.qualification,
-        experienced:req.body.experienced,
+        role:null,
+        phone: null,
+        qualification:null,
+        experienced:null,
         isApproved: false,
-        photo:req.body.photo
+        photo:null
       
         
     });
